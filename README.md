@@ -1,51 +1,37 @@
-Naukri Resume Auto Uploader
+# Naukri Resume Auto Uploader
 
 A Python + Playwright automation project that periodically updates a user's resume on their Naukri profile.
 
-This project was created as a demonstration of:
+This project demonstrates practical experience with:
 
-Python automation
+- Python automation
+- Playwright browser automation
+- Persistent browser sessions
+- File upload automation
+- Exception handling
+- Logging
+- Screenshot-based debugging
+- Long-running automation processes
 
-Playwright browser automation
+> **Important:** This project is intended for educational and portfolio purposes. Automating a third-party website may be subject to that website's Terms of Service and anti-automation policies. Review Naukri's current terms and policies before using this project.
 
-Persistent browser sessions
+## Features
 
-File uploads through Playwright
+- Automatically opens the Naukri profile page.
+- Uses a persistent Chromium browser profile to maintain an existing login session.
+- Uploads a configured resume file.
+- Periodically repeats the upload operation.
+- Configurable upload interval.
+- Timestamped console logging.
+- Captures screenshots after upload attempts.
+- Captures screenshots when automation encounters an error.
+- Does not require storing a Naukri username or password in source code.
 
-Exception handling
-
-Logging
-
-Automated screenshots for troubleshooting
-
-Long-running automation processes
-
-Important: This project is intended for educational and portfolio purposes. Automating a third-party website may be subject to that website's Terms of Service and anti-automation policies. Review Naukri's current terms and policies before using this project.
-
-Features
-
-Automatically opens the Naukri profile page.
-
-Uses a persistent Chromium browser profile so the user can maintain an existing login session.
-
-Uploads a configured resume file.
-
-Periodically repeats the upload operation.
-
-Configurable upload interval.
-
-Timestamped console logging.
-
-Captures screenshots after successful uploads.
-
-Captures screenshots when automation encounters an error.
-
-Does not require storing a Naukri username or password in source code.
-
-How it works
+## How It Works
 
 The automation performs the following workflow:
 
+```text
 Start
   │
   ├── Check resume file
@@ -65,217 +51,238 @@ Start
   └── Wait for configured interval
           │
           └── Repeat
+```
 
-Requirements
+## Requirements
 
-Python 3.9+
+- Python 3.9+
+- Playwright
+- Chromium
+- A Naukri account
+- A resume file
+- Permission to automate your own account
 
-Google Chromium/Playwright Chromium
+## Installation
 
-A Naukri account
+### 1. Clone the repository
 
-A resume file in PDF format
-
-Permission to automate your own account
-
-Installation
-
-Clone the repository:
-
+```bash
 git clone https://github.com/YOUR_USERNAME/naukri-resume-auto-uploader.git
 cd naukri-resume-auto-uploader
+```
 
+### 2. Create a virtual environment
 
-Create a virtual environment:
+#### Windows
 
-Windows
+```cmd
 python -m venv .venv
 .venv\Scripts\activate
+```
 
-macOS/Linux
+#### macOS/Linux
+
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
+```
 
+### 3. Install dependencies
 
-Install dependencies:
-
+```bash
 pip install -r requirements.txt
+```
 
+### 4. Install Playwright Chromium
 
-Install Playwright Chromium:
-
+```bash
 playwright install chromium
+```
 
-Configuration
+## Configuration
 
-Copy .env.example to .env:
+Copy `.env.example.md` to `.env`.
 
-copy .env.example .env
+### Windows
 
+```cmd
+copy .env.example.md .env
+```
 
-On macOS/Linux:
+### macOS/Linux
 
-cp .env.example .env
+```bash
+cp .env.example.md .env
+```
 
-
-Update the values in .env.
+Update the values in `.env`.
 
 Example:
 
+```env
 NAUKRI_URL=https://www.naukri.com/mnjuser/profile?id=&altresid
 RESUME_PATH=C:\Users\YourName\Documents\resume.pdf
 INTERVAL_MINUTES=60
 TIMEOUT_MS=30000
+BROWSER_PROFILE=./naukri_browser_profile
+```
 
-Linux/macOS example
+### Linux/macOS example
+
+```env
 RESUME_PATH=/home/username/Documents/resume.pdf
+```
 
-First-time login
+> **Security:** Never commit your `.env` file to GitHub. It is intentionally excluded through `.gitignore`.
+
+## First-Time Login
 
 The application uses a persistent Playwright browser profile.
 
 On the first run:
 
-Start the application.
+1. Start the application.
+2. Chromium opens.
+3. Log into your Naukri account manually if required.
+4. Complete any required verification manually.
+5. The persistent browser profile stores the browser session locally.
+6. Subsequent runs can reuse the stored session while it remains valid.
 
-Chromium opens.
+The browser profile is intentionally excluded from Git using `.gitignore`.
 
-Log into your Naukri account manually if required.
+> **Never commit the browser profile to GitHub.** It may contain authentication and session information.
 
-Keep the browser session available.
+## Running the Application
 
-The persistent profile will retain the browser session for subsequent runs.
+Run:
 
-The browser profile is stored locally and is intentionally excluded from Git using .gitignore.
-
-Never commit the browser profile to GitHub.
-
-It may contain authentication/session information.
-
-Run
+```bash
 python naukri_resume_uploader.py
-
+```
 
 Example console output:
 
+```text
 [2026-09-28 23:00:00] Naukri Resume Auto-Uploader started.
 [2026-09-28 23:00:00] Resume: C:\Users\YourName\Documents\resume.pdf
 [2026-09-28 23:00:00] Interval: 60 minutes
 [2026-09-28 23:00:01] Starting resume upload...
-[2026-09-28 23:00:04] Found resume upload element
+[2026-09-28 23:00:04] Found resume upload element.
 [2026-09-28 23:00:05] Resume file selected.
 [2026-09-28 23:00:05] Clicking 'Update resume'...
 [2026-09-28 23:00:10] Upload/update request completed.
+```
 
-Screenshots
+## Screenshots
 
-The program creates screenshots to help verify successful execution and troubleshoot failures.
+The application can create screenshots for verification and troubleshooting.
 
-Examples:
+Example files:
 
+```text
 screenshots/upload_20260928_230010.png
 screenshots/error_20260928_230500.png
+```
 
+Screenshots are excluded from the public repository by `.gitignore` because they may contain personal information.
 
-Screenshots containing personal information should not be uploaded to a public repository.
+If you want to showcase screenshots on GitHub, use screenshots that have been reviewed and anonymized.
 
-Project structure
+## Project Structure
+
+```text
 naukri-resume-auto-uploader/
 │
 ├── naukri_resume_uploader.py   # Main automation program
 ├── requirements.txt             # Python dependencies
 ├── .env.example                 # Example configuration
-├── .gitignore                   # Prevents secrets/personal files from being committed
-├── LICENSE                      # Open-source license
+├── .gitignore                   # Prevents personal/sensitive files from being committed
+├── LICENSE.txt                  # Project license
 ├── README.md                    # Project documentation
 │
 └── screenshots/
     └── .gitkeep
+```
 
-Important security considerations
+## Important Security Considerations
 
 Do not commit any of the following:
 
-Resume files
+- Resume files
+- Browser profiles
+- Cookies
+- Authentication/session data
+- `.env`
+- Screenshots containing personal information
+- Personal configuration files
+- Passwords
+- API keys
+- Access tokens
 
-Browser profiles
+The repository's `.gitignore` is configured to help prevent accidental commits of these files.
 
-Cookies
+Before pushing changes, always check:
 
-Authentication/session data
+```bash
+git status
+```
 
-.env
+and:
 
-Screenshots containing personal information
+```bash
+git diff --cached
+```
 
-Personal configuration files
-
-Passwords or API keys
-
-The repository's .gitignore is configured to help prevent accidental commits.
-
-Limitations
+## Limitations
 
 Websites can change their HTML structure at any time.
 
 For example, this project currently depends on selectors such as:
 
+```css
 #attachCV
-
+```
 
 and:
 
+```css
 input[type="button"][value="Update resume"]
-
+```
 
 If Naukri changes its frontend, these selectors may stop working.
 
 The automation also depends on the user's browser session remaining valid.
 
-Responsible use
+## Responsible Use
 
 This project should be used responsibly and only with accounts you are authorized to automate.
 
 Do not use it to:
 
-Access another person's account
-
-Bypass authentication
-
-Circumvent security controls
-
-Evade anti-bot protections
-
-Upload someone else's private information
-
-Circumvent website restrictions
+- Access another person's account
+- Bypass authentication
+- Circumvent security controls
+- Evade anti-bot protections
+- Upload someone else's private information
+- Circumvent website restrictions
 
 Users are responsible for complying with Naukri's current Terms of Service and applicable laws.
 
-Portfolio value
+## Portfolio Value
 
 This project demonstrates practical experience with:
 
-Python
+- Python
+- Playwright
+- Browser automation
+- Persistent browser contexts
+- File upload automation
+- Environment-based configuration
+- Exception handling
+- Logging
+- Screenshot-based debugging
+- Long-running processes
 
-Playwright
+## License
 
-Browser automation
-
-Persistent browser contexts
-
-File upload automation
-
-Environment-based configuration
-
-Exception handling
-
-Logging
-
-Screenshot-based debugging
-
-Long-running processes
-
-License
-
-This project is licensed under the MIT License. See LICENSE.
+This project is licensed under the MIT License. See [LICENSE.txt](LICENSE.txt).
