@@ -86,9 +86,8 @@ def upload_resume(page):
         timeout=TIMEOUT_MS
     )
 
-    log("Clicking 'Update resume'...")
-
-    update_button.click()
+    # log("Clicking 'Update resume'...")
+    # update_button.click()
 
     # Allow the website to process the upload.
     page.wait_for_timeout(5000)
