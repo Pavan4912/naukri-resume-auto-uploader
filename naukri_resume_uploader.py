@@ -4,6 +4,7 @@ from datetime import datetime
 
 from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
+from pathlib import Path
 
 #============================================================
 # CONFIGURATION
@@ -73,9 +74,24 @@ def upload_resume(page):
 
     log("Found resume upload element.")
 
-    file_input.set_input_files(RESUME_PATH)
+    # ========================================================
+    # Upload with dynamically generated filename
+    # ========================================================
+    resume_path = Path(RESUME_PATH)
+    base_name = resume_path.stem
+    extension = resume_path.suffix
 
-    log("Resume file selected.")
+    uploaded_filename = (
+        f"{base_name}_{datetime.now().strftime('%d%b%Y')}{extension}"
+    )
+
+    file_input.set_input_files({
+        "name": uploaded_filename,
+        "mimeType": "application/pdf",
+        "buffer": resume_path.read_bytes(),
+    })
+
+    log(f"Resume file selected as: {uploaded_filename}")
 
     update_button = page.locator(
         'input[type="button"][value="Update resume"]'
