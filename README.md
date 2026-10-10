@@ -67,7 +67,7 @@ Start
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/naukri-resume-auto-uploader.git
+git clone https://github.com/Pavan4912/naukri-resume-auto-uploader.git
 cd naukri-resume-auto-uploader
 ```
 
@@ -147,6 +147,7 @@ On the first run:
 4. Complete any required verification manually.
 5. The persistent browser profile stores the browser session locally.
 6. Subsequent runs can reuse the stored session while it remains valid.
+7. User need to restart the application **only for first time** after performing the above steps.
 
 The browser profile is intentionally excluded from Git using `.gitignore`.
 
